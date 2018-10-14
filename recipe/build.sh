@@ -11,7 +11,11 @@ if [ `uname` == Darwin ]; then
     export LDFLAGS="${LDFLAGS} -Wl,-rpath,$PREFIX/lib"
 fi
 
-./configure --prefix=${PREFIX} --disable-examples --disable-spec
+if [ $target_platform == linux-32 ]; then
+    export CFLAGS="$CFLAGS -Og"
+fi
+
+./configure --prefix=${PREFIX} --build=$BUILD --disable-examples --disable-spec
 make
 make check
 make install
