@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cp -fv $BUILD_PREFIX/share/gnuconfig/config.* ./
+
 export C_INCLUDE_PATH=${PREFIX}/include
 export LDFLAGS="-L${PREFIX}/lib"
 export PKG_CONFIG_PATH=${PREFIX}/lib/pkgconfig

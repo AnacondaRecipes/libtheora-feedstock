@@ -10,7 +10,7 @@ source:
   sha256: b6ae1ee2fa3d42ac489287d3ec34c5885730b1296f0801ae577a35193d3affbc
 
 build:
-    number: 1
+    number: 2
     skip: True  # [win]
     run_exports:
       # http://upstream.rosalinux.ru/versions/libtheora.html
@@ -19,15 +19,20 @@ build:
 
 requirements:
   build:
+    - gnuconfig     # [unix]
     - pkg-config
     - {{ compiler("c") }}
     - make
 
   host:
     - libogg
-    - libvorbis
-    - libpng
-    - zlib
+    # The following are only needed for the example/test applications; see the
+    # upstream README.md for details. Since we don't build and ship said
+    # applications, exclude them from the host/run requirements to avoid
+    # overdepending warnings/errors from conda-build.
+    #- libvorbis
+    #- libpng
+    #- zlib
 
   run:
     - {{ pin_compatible('libogg') }}
