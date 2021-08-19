@@ -11,7 +11,6 @@ source:
 
 build:
     number: 2
-    skip: True  # [win]
     run_exports:
       # http://upstream.rosalinux.ru/versions/libtheora.html
       # No release in ~8 years. Keep default pinning
@@ -19,24 +18,23 @@ build:
 
 requirements:
   build:
-    - gnuconfig     # [unix]
     - pkg-config
     - {{ compiler("c") }}
-    - make
-
+    - autoconf              # [unix]
+    - automake              # [unix]
+    - make                  # [unix]
+    - libtool               # [unix]
+    - cmake                 # [win]
   host:
     - libogg
-    # The following are only needed for the example/test applications; see the
-    # upstream README.md for details. Since we don't build and ship said
-    # applications, exclude them from the host/run requirements to avoid
-    # overdepending warnings/errors from conda-build.
-    #- libvorbis
-    #- libpng
-    #- zlib
+    - pkg-config           # [unix]
+    - libvorbis            # [unix]
+    - libpng               # [unix]
+    - zlib                 # [unix]
 
   run:
     - {{ pin_compatible('libogg') }}
-
+    - libvorbis            # [unix]
 test:
   commands:
     # Verify libraries.

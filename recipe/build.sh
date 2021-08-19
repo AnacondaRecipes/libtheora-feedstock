@@ -1,6 +1,10 @@
 #!/bin/bash
 
-cp -fv $BUILD_PREFIX/share/gnuconfig/config.* ./
+rm ./config.sub
+./autogen.sh
+
+# Get an updated config.sub and config.guess
+cp -r ${BUILD_PREFIX}/share/libtool/build-aux/config.* .
 
 export C_INCLUDE_PATH=${PREFIX}/include
 export LDFLAGS="-L${PREFIX}/lib"
@@ -17,7 +21,7 @@ if [ $target_platform == linux-32 ]; then
     export CFLAGS="$CFLAGS -Og"
 fi
 
-./configure --prefix=${PREFIX} --build=$BUILD --disable-examples --disable-spec
+./configure --prefix=${PREFIX} --disable-examples --disable-spec
 make
 make check
 make install
