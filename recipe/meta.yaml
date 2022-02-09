@@ -19,6 +19,7 @@ build:
 
 requirements:
   build:
+    - pkg-config
     - {{ compiler("c") }}
     - autoconf              # [unix or osx]
     - automake              # [unix or osx]
