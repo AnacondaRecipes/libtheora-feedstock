@@ -3,7 +3,7 @@ project(theora LANGUAGES C)
 
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}")
 FIND_PATH(OGG_INCLUDE_DIR
-    ogg.h
+    ogg/ogg.h
     PATH_SUFFIXES include/ogg
 )
 
