@@ -20,10 +20,10 @@ build:
 requirements:
   build:
     - {{ compiler("c") }}
-    - autoconf              # [unix]
-    - automake              # [unix]
-    - make                  # [unix]
-    - libtool               # [unix]
+    - autoconf              # [unix or osx]
+    - automake              # [unix or osx]
+    - make                  # [unix or osx]
+    - libtool               # [unix or osx]
     - cmake                 # [win]
   host:
     - libogg
