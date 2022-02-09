@@ -29,6 +29,7 @@ requirements:
   host:
     - libogg
     - pkg-config            # [unix or osx]
+    - libtool               # [unix or osx]
   run:
     - {{ pin_compatible('libogg') }}
     - libvorbis             # [unix or osx]
