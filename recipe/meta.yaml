@@ -10,7 +10,7 @@ source:
   sha256: b6ae1ee2fa3d42ac489287d3ec34c5885730b1296f0801ae577a35193d3affbc
 
 build:
-  number: 2
+  number: 3
   run_exports:
     # http://upstream.rosalinux.ru/versions/libtheora.html
     # No release in ~8 years. Keep default pinning
@@ -28,9 +28,10 @@ requirements:
     - cmake                 # [win]
   host:
     - libogg
+    - pkg-config            # [unix or osx]
   run:
     - {{ pin_compatible('libogg') }}
-    - libvorbis            # [unix]
+    - libvorbis             # [unix or osx]
 
 test:
   commands:
