@@ -21,18 +21,18 @@ requirements:
   build:
     - pkg-config
     - {{ compiler("c") }}
-    - autoconf              # [unix or osx]
-    - automake              # [unix or osx]
-    - make                  # [unix or osx]
-    - libtool               # [unix or osx]
+    - autoconf              # [linux or osx]
+    - automake              # [linux or osx]
+    - make                  # [linux or osx]
+    - libtool               # [linux or osx]
     - cmake                 # [win]
   host:
     - libogg
-    - pkg-config            # [unix or osx]
-    - libtool               # [unix or osx]
+    - pkg-config            # [linux or osx]
+    - libtool               # [linux or osx]
   run:
     - {{ pin_compatible('libogg') }}
-    - libvorbis             # [unix or osx]
+    - libvorbis             # [linux or osx]
 
 test:
   commands:
