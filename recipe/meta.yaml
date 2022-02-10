@@ -59,6 +59,8 @@ about:
   # Additional licencing information in LICENSE as well
   license_file: COPYING
   summary: "Theora is a free and open video compression format from the Xiph.org Foundation."
+  dev_url: https://github.com/xiph/theora
+  doc_url: https://theora.org/doc/libtheora-1.1/index.html
 
 extra:
   recipe-maintainers:
