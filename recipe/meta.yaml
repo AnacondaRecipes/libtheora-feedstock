@@ -1,16 +1,16 @@
-{% set version = "1.1.1" %}
+{% set name = "libtheora" %}
+{% set version = "1.2.0" %}
 
 package:
-  name: libtheora
+  name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  fn: libtheora-{{ version }}.tar.bz2
-  url: http://downloads.xiph.org/releases/theora/libtheora-{{ version }}.tar.bz2
-  sha256: b6ae1ee2fa3d42ac489287d3ec34c5885730b1296f0801ae577a35193d3affbc
+  url: https://downloads.xiph.org/releases/theora/{{ name }}-{{ version }}.tar.gz
+  sha256: 279327339903b544c28a92aeada7d0dcfd0397b59c2f368cc698ac56f515906e
 
 build:
-  number: 3
+  number: 0
   run_exports:
     # http://upstream.rosalinux.ru/versions/libtheora.html
     # No release in ~8 years. Keep default pinning
@@ -20,16 +20,17 @@ build:
 requirements:
   build:
     - pkg-config
+    - {{ stdlib("c") }}
     - {{ compiler("c") }}
     - autoconf              # [unix]
     - automake              # [unix]
     - make                  # [unix]
     - libtool               # [unix]
     - cmake                 # [win]
+    - ninja-base            # [win]
   host:
-    - libogg
-    - pkg-config            # [unix]
-    - libtool               # [unix]
+    - libogg  {{ libogg }}
+    - libvorbis  {{ libvorbis }}  # [unix]
   run:
     - {{ pin_compatible('libogg') }}
     - libvorbis             # [unix]
@@ -43,22 +44,26 @@ test:
         "theoraenc"
     ] %}
     {% for each_libtheora_lib in libtheora_libs %}
-    - test -f ${PREFIX}/lib/lib{{ each_libtheora_lib }}.a                           # [unix]
-    - test -f ${PREFIX}/lib/lib{{ each_libtheora_lib }}.dylib                       # [osx]
-    - test -f ${PREFIX}/lib/lib{{ each_libtheora_lib }}.so                          # [linux]
-    - if exist %PREFIX%\\Library\\lib\\{{ each_libtheora_lib }}.lib (exit 0) else (exit 1)  # [win]
-    - if exist %PREFIX%\\Library\\include\\{{ each_libtheora_lib }}.h (exit 0) else (exit 1)  # [win]
-    - if exist %PREFIX%\\Library\\bin\\{{ each_libtheora_lib }}.dll (exit 0) else (exit 1)  # [win]
+    - test -f ${PREFIX}/include/theora/{{ each_libtheora_lib }}.h  # [unix]
+    - test -f ${PREFIX}/lib/lib{{ each_libtheora_lib }}.a  # [unix]
+    - test -f ${PREFIX}/lib/lib{{ each_libtheora_lib }}${SHLIB_EXT}  # [unix]
+    - if not exist %LIBRARY_INC%\\theora\\{{ each_libtheora_lib }}.h exit 1  # [win]
+    - if not exist %LIBRARY_LIB%\\{{ each_libtheora_lib }}.lib exit 1  # [win]
+    - if not exist %LIBRARY_BIN%\\{{ each_libtheora_lib }}.dll exit 1  # [win]
     {% endfor %}
 
 about:
   home: https://theora.org
   license: BSD-3-Clause
-  # BSD like
   license_family: BSD
-  # Additional licencing information in LICENSE as well
-  license_file: COPYING
-  summary: "Theora is a free and open video compression format from the Xiph.org Foundation."
+  license_file: 
+    - COPYING
+    - LICENSE
+  summary: Theora is a free and open video compression format from the Xiph.org Foundation.
+  description: |
+    Theora was Xiph.Org's first publicly released video codec, intended for use within 
+    the Foundation's Ogg multimedia streaming system. Theora is derived directly from On2's VP3 codec, 
+    adds new features while allowing it a longer useful lifetime.
   dev_url: https://github.com/xiph/theora
   doc_url: https://theora.org/doc/libtheora-1.1/index.html
 
