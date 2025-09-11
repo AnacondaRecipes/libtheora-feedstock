@@ -10,11 +10,9 @@ source:
   sha256: 279327339903b544c28a92aeada7d0dcfd0397b59c2f368cc698ac56f515906e
 
 build:
-  number: 0
+  number: 1
   run_exports:
-    # http://upstream.rosalinux.ru/versions/libtheora.html
-    # No release in ~8 years. Keep default pinning
-    - {{ pin_subpackage('libtheora') }}
+    - {{ pin_subpackage('libtheora', max_pin='x.x') }}
   skip: True  # [win and vc<14]
 
 requirements:
